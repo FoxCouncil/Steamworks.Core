@@ -49,5 +49,35 @@ namespace Steamworks.Core
         public override bool IsInvalid { get; }
 
         #endregion
+
+        #region Static Methods
+
+        public static string ToString(IntPtr c_nativeStringPtr)
+        {
+            if (c_nativeStringPtr == IntPtr.Zero)
+            {
+                return string.Empty;
+            }
+
+            var a_length = 0;
+
+            while (Marshal.ReadByte(c_nativeStringPtr, a_length) != 0)
+            {
+                ++a_length;
+            }
+
+            if (a_length == 0)
+            {
+                return string.Empty;
+            }
+
+            var a_buffer = new byte[a_length];
+
+            Marshal.Copy(c_nativeStringPtr, a_buffer, 0, a_buffer.Length);
+
+            return Encoding.UTF8.GetString(a_buffer);
+        }
+
+        #endregion
     }
 }

@@ -72,9 +72,151 @@ namespace Steamworks.Core
                 return false;
             }
 
-            m_pSteamClient = SteamApi.CreateInterface(new SafeUtf8String("SteamClient017"));
+            m_pSteamClient = SteamApi.CreateInterface(new SafeUtf8String(SteamApi.STEAMCLIENT_INTERFACE_VERSION));
 
             if (m_pSteamClient == IntPtr.Zero)
+            {
+                return false;
+            }
+
+            var a_tempSteamClient = new SteamClient(m_pSteamClient);
+
+            m_pSteamUser = a_tempSteamClient.GetISteamUser(a_steamUser, a_steamPipe, SteamApi.STEAMUSER_INTERFACE_VERSION);
+
+            if (m_pSteamUser == IntPtr.Zero)
+            {
+                return false;
+            }
+
+            m_pSteamFriends = a_tempSteamClient.GetISteamFriends(a_steamUser, a_steamPipe, SteamApi.STEAMFRIENDS_INTERFACE_VERSION);
+
+            if (m_pSteamFriends == IntPtr.Zero)
+            {
+                return false;
+            }
+
+            m_pSteamUtils = a_tempSteamClient.GetISteamUtils(a_steamPipe, SteamApi.STEAMUTILS_INTERFACE_VERSION);
+
+            if (m_pSteamFriends == IntPtr.Zero)
+            {
+                return false;
+            }
+
+            m_pSteamMatchmaking = a_tempSteamClient.GetISteamMatchmaking(a_steamUser, a_steamPipe, SteamApi.STEAMMATCHMAKING_INTERFACE_VERSION);
+
+            if (m_pSteamMatchmaking == IntPtr.Zero)
+            {
+                return false; 
+            }
+
+            m_pSteamMatchmakingServers = a_tempSteamClient.GetISteamMatchmakingServers(a_steamUser, a_steamPipe, SteamApi.STEAMMATCHMAKINGSERVERS_INTERFACE_VERSION);
+
+            if (m_pSteamMatchmakingServers == IntPtr.Zero)
+            {
+                return false; 
+            }
+
+            m_pSteamUserStats = a_tempSteamClient.GetISteamUserStats(a_steamUser, a_steamPipe, SteamApi.STEAMUSERSTATS_INTERFACE_VERSION);
+
+            if (m_pSteamUserStats == IntPtr.Zero)
+            {
+                return false;
+            }
+
+            m_pSteamApps = a_tempSteamClient.GetISteamApps(a_steamUser, a_steamPipe, SteamApi.STEAMAPPS_INTERFACE_VERSION);
+
+            if (m_pSteamApps == IntPtr.Zero)
+            {
+                return false;
+            }
+
+            m_pSteamNetworking = a_tempSteamClient.GetISteamNetworking(a_steamUser, a_steamPipe, SteamApi.STEAMNETWORKING_INTERFACE_VERSION);
+
+            if (m_pSteamNetworking == IntPtr.Zero)
+            {
+                return false;
+            }
+
+            m_pSteamRemoteStorage = a_tempSteamClient.GetISteamRemoteStorage(a_steamUser, a_steamPipe, SteamApi.STEAMREMOTESTORAGE_INTERFACE_VERSION);
+
+            if (m_pSteamRemoteStorage == IntPtr.Zero)
+            {
+                return false;
+            }
+
+            m_pSteamScreenshots = a_tempSteamClient.GetISteamScreenshots(a_steamUser, a_steamPipe, SteamApi.STEAMSCREENSHOTS_INTERFACE_VERSION);
+
+            if (m_pSteamScreenshots == IntPtr.Zero)
+            {
+                return false;
+            }
+
+            m_pSteamHTTP = a_tempSteamClient.GetISteamHttp(a_steamUser, a_steamPipe, SteamApi.STEAMHTTP_INTERFACE_VERSION);
+
+            if (m_pSteamHTTP == IntPtr.Zero)
+            {
+                return false;
+            }
+
+            m_pSteamUnifiedMessages = a_tempSteamClient.GetISteamUnifiedMessages(a_steamUser, a_steamPipe, SteamApi.STEAMUNIFIEDMESSAGES_INTERFACE_VERSION);
+
+            if (m_pSteamUnifiedMessages == IntPtr.Zero)
+            {
+                return false;
+            }
+
+            m_pController = a_tempSteamClient.GetISteamController(a_steamUser, a_steamPipe, SteamApi.STEAMCONTROLLER_INTERFACE_VERSION);
+
+            if (m_pController == IntPtr.Zero)
+            {
+                return false;
+            }
+
+            m_pSteamUGC = a_tempSteamClient.GetISteamUgc(a_steamUser, a_steamPipe, SteamApi.STEAMUGC_INTERFACE_VERSION);
+
+            if (m_pSteamUGC == IntPtr.Zero)
+            {
+                return false;
+            }
+
+            m_pSteamAppList = a_tempSteamClient.GetISteamAppList(a_steamUser, a_steamPipe, SteamApi.STEAMAPPLIST_INTERFACE_VERSION);
+
+            if (m_pSteamAppList == IntPtr.Zero)
+            {
+                return false;
+            }
+
+            m_pSteamMusic = a_tempSteamClient.GetISteamMusic(a_steamUser, a_steamPipe, SteamApi.STEAMMUSIC_INTERFACE_VERSION);
+
+            if (m_pSteamMusic == IntPtr.Zero)
+            {
+                return false;
+            }
+
+            m_pSteamMusicRemote = a_tempSteamClient.GetISteamMusicRemote(a_steamUser, a_steamPipe, SteamApi.STEAMMUSICREMOTE_INTERFACE_VERSION);
+
+            if (m_pSteamMusicRemote == IntPtr.Zero)
+            {
+                return false;
+            }
+
+            m_pSteamHTMLSurface = a_tempSteamClient.GetISteamHtmlSurface(a_steamUser, a_steamPipe, SteamApi.STEAMHTMLSURFACE_INTERFACE_VERSION);
+
+            if (m_pSteamHTMLSurface == IntPtr.Zero)
+            {
+                return false;
+            }
+
+            m_pSteamInventory = a_tempSteamClient.GetISteamInventory(a_steamUser, a_steamPipe, SteamApi.STEAMINVENTORY_INTERFACE_VERSION);
+
+            if (m_pSteamInventory == IntPtr.Zero)
+            {
+                return false;
+            }
+
+            m_pSteamVideo = a_tempSteamClient.GetISteamVideo(a_steamUser, a_steamPipe, SteamApi.STEAMVIDEO_INTERFACE_VERSION);
+
+            if (m_pSteamVideo == IntPtr.Zero)
             {
                 return false;
             }

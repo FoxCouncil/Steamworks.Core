@@ -1,4 +1,8 @@
-﻿{
+{
+    "title": "Steamworks.Core",
+    "copyright": "Fox Council",
+    "description": ".NET Core bindings to Valve's wonderful Steamworks API",
+    "language": "en-US",
     "version": "1.0.0-*",
 
     "dependencies": {
@@ -6,7 +10,8 @@
     },
 
     "buildOptions": {
-        "allowUnsafe": true
+        "allowUnsafe": true,
+        "optimize": true
     },
 
     "frameworks": {

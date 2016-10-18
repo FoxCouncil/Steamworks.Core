@@ -24,9 +24,9 @@ namespace Steamworks.Core
 
         public delegate void ShutdownFunc();
 
-        public delegate int GetHSteamUserFunc();
+        public delegate uint GetHSteamUserFunc();
 
-        public delegate int GetHSteamPipeFunc();
+        public delegate uint GetHSteamPipeFunc();
 
         public unsafe delegate CSteamApiContext* ContextInitFunc(IntPtr c_callbackStruc);
 
@@ -34,10 +34,53 @@ namespace Steamworks.Core
 
         public const string STEAM_DEBUG_APP_ID_FILENAME = "./steam_appid.txt";
 
+        #region Versioning
+
         public static readonly Version SteamworksCoreVersion = new Version(1, 0, 0, 0);
 
         public static readonly Version SteamApiVersion = new Version(1, 38);
         public static readonly Version SteamApiDllVersion = new Version(3, 64, 82, 82);
+
+
+        private const string kSteamworksWin32ModuleName = "steam_api.dll";
+        private const string kSteamworksWin64ModuleName = "steam_api64.dll";
+
+        private const string kSteamworksLinux32ModuleName = "libsteam_api.so";
+        private const string kSteamworksLinux64ModuleName = "libsteam_api.so";
+
+#if WIN32
+        public const string STEAMWORKS_MODULE_NAME = kSteamworksWin32ModuleName;
+#elif LINUX32
+        public const string STEAMWORKS_MODULE_NAME = kSteamworksLinux32ModuleName;
+#elif LINUX64
+        public const string STEAMWORKS_MODULE_NAME = kSteamworksLinux64ModuleName;
+#else
+        public const string STEAMWORKS_MODULE_NAME = kSteamworksWin64ModuleName;
+#endif
+
+        public const string STEAMCLIENT_INTERFACE_VERSION = "SteamClient017";
+        public const string STEAMUSER_INTERFACE_VERSION = "SteamUser019";
+        public const string STEAMFRIENDS_INTERFACE_VERSION = "SteamFriends015";
+        public const string STEAMUTILS_INTERFACE_VERSION = "SteamUtils008";
+        public const string STEAMMATCHMAKING_INTERFACE_VERSION = "SteamMatchMaking009";
+        public const string STEAMMATCHMAKINGSERVERS_INTERFACE_VERSION = "SteamMatchMakingServers002";
+        public const string STEAMUSERSTATS_INTERFACE_VERSION = "STEAMUSERSTATS_INTERFACE_VERSION011";
+        public const string STEAMAPPS_INTERFACE_VERSION = "STEAMAPPS_INTERFACE_VERSION008";
+        public const string STEAMNETWORKING_INTERFACE_VERSION = "SteamNetworking005";
+        public const string STEAMREMOTESTORAGE_INTERFACE_VERSION = "STEAMREMOTESTORAGE_INTERFACE_VERSION014";
+        public const string STEAMSCREENSHOTS_INTERFACE_VERSION = "STEAMSCREENSHOTS_INTERFACE_VERSION003";
+        public const string STEAMHTTP_INTERFACE_VERSION = "STEAMHTTP_INTERFACE_VERSION002";
+        public const string STEAMUNIFIEDMESSAGES_INTERFACE_VERSION = "STEAMUNIFIEDMESSAGES_INTERFACE_VERSION001";
+        public const string STEAMCONTROLLER_INTERFACE_VERSION = "SteamController004";
+        public const string STEAMUGC_INTERFACE_VERSION = "STEAMUGC_INTERFACE_VERSION009";
+        public const string STEAMAPPLIST_INTERFACE_VERSION = "STEAMAPPLIST_INTERFACE_VERSION001";
+        public const string STEAMMUSIC_INTERFACE_VERSION = "STEAMMUSIC_INTERFACE_VERSION001";
+        public const string STEAMMUSICREMOTE_INTERFACE_VERSION = "STEAMMUSICREMOTE_INTERFACE_VERSION001";
+        public const string STEAMHTMLSURFACE_INTERFACE_VERSION = "STEAMHTMLSURFACE_INTERFACE_VERSION_003";
+        public const string STEAMINVENTORY_INTERFACE_VERSION = "STEAMINVENTORY_INTERFACE_V001";
+        public const string STEAMVIDEO_INTERFACE_VERSION = "STEAMVIDEO_INTERFACE_V001";
+
+        #endregion
 
         private static bool m_isInitialized;
 
@@ -118,7 +161,7 @@ namespace Steamworks.Core
             }
         }
 
-        private static void LoadMethods()
+        private static unsafe void LoadMethods()
         {
             NativeInit = LoadSteamworksFunction<InitFunc>("SteamAPI_Init");
             Shutdown = LoadSteamworksFunction<ShutdownFunc>("SteamAPI_Shutdown");
@@ -138,25 +181,36 @@ namespace Steamworks.Core
 
         public static unsafe OnContextInitFunc OnContextInitPtr = OnContextInit;
 
+        private static unsafe CSteamApiContext* m_steamApiContext;
+
         private static unsafe CSteamApiContext* GetSteamApiContext()
         {
+            if (m_steamApiContext != null)
+            {
+                return m_steamApiContext;
+            }
+
             var a_callbackCounterAndContext = CallbackCounterAndContext();
 
-            return ContextInit(Marshal.UnsafeAddrOfPinnedArrayElement(a_callbackCounterAndContext, 0));
+            m_steamApiContext = ContextInit(a_callbackCounterAndContext);
+
+            return m_steamApiContext;
         }
 
-        private static unsafe IntPtr[] CallbackCounterAndContext()
+        private static unsafe IntPtr CallbackCounterAndContext()
         {
-            if (m_callbackCounterAndContext != null)
+            if (m_callbackCounterAndContext != IntPtr.Zero)
             {
                 return m_callbackCounterAndContext;
             }
 
             var a_size = 2 + Marshal.SizeOf<CSteamApiContext>() / Marshal.SizeOf<IntPtr>();
 
-            m_callbackCounterAndContext = new IntPtr[a_size];
+            var a_callbackCounterAndContext = new IntPtr[a_size];
 
-            m_callbackCounterAndContext[0] = Marshal.GetFunctionPointerForDelegate(OnContextInitPtr);
+            a_callbackCounterAndContext[0] = Marshal.GetFunctionPointerForDelegate(OnContextInitPtr);
+
+            m_callbackCounterAndContext = Marshal.UnsafeAddrOfPinnedArrayElement(a_callbackCounterAndContext, 0);
 
             return m_callbackCounterAndContext;
         }
@@ -208,15 +262,54 @@ namespace Steamworks.Core
 
         #region Accessors
 
-        public static unsafe ISteamClient Client
+        private static SteamClient m_steamClient;
+
+        public static unsafe SteamClient Client
         {
             get
             {
-                var a_pContext = GetSteamApiContext()->m_pSteamClient;
+                if (m_steamClient != null)
+                {
+                    return m_steamClient;
+                }
 
-                var a_ptrHandle = (GCHandle)a_pContext;
+                m_steamClient = new SteamClient(GetSteamApiContext()->m_pSteamClient);
 
-                return a_ptrHandle.Target as ISteamClient;
+                return m_steamClient;
+            }
+        }
+
+        private static SteamUser m_steamUser;
+
+        public static unsafe SteamUser User
+        {
+            get
+            {
+                if (m_steamUser != null)
+                {
+                    return m_steamUser;
+                }
+
+                m_steamUser = new SteamUser(GetSteamApiContext()->m_pSteamUser);
+
+                return m_steamUser;
+            }
+        }
+
+        private static SteamFriends m_steamFriends;
+
+        public static unsafe SteamFriends Friends
+        {
+            get
+            {
+                if (m_steamFriends != null)
+                {
+                    return m_steamFriends;
+                }
+
+                m_steamFriends = new SteamFriends(GetSteamApiContext()->m_pSteamFriends);
+
+                return m_steamFriends;
             }
         }
 
@@ -224,13 +317,10 @@ namespace Steamworks.Core
 
         #region Windows Interop
 
-        private const string kSteamworksWin32ModuleName = "steam_api.dll";
-        private const string kSteamworksWin64ModuleName = "steam_api64.dll";
-
         private const string kKernel32ModuleName = "kernel32.dll";
 
         private static IntPtr m_libProcAddress;
-        private static IntPtr[] m_callbackCounterAndContext;
+        private static IntPtr m_callbackCounterAndContext;
 
         [DllImport(kKernel32ModuleName, CharSet = CharSet.Ansi, ExactSpelling = true, SetLastError = true)]
         private static extern IntPtr GetProcAddress(IntPtr c_hModule, string c_procName);
@@ -239,5 +329,6 @@ namespace Steamworks.Core
         private static extern IntPtr LoadLibrary(string c_lpFileName);
 
         #endregion
+
     }
 }

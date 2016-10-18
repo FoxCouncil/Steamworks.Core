@@ -13,8 +13,8 @@ namespace Steamworks.Core.Test
 
             Console.WriteLine(SteamApi.GetHSteamPipe());
             Console.WriteLine(SteamApi.GetHSteamUser());
-            Console.WriteLine(SteamApi.Client.GetIPCCallCount());
-            
+            Console.WriteLine(SteamApi.Client.GetIpcCallCount());
+            Console.WriteLine(SteamApi.Friends.GetPersonaName());
         }
     }
 }
