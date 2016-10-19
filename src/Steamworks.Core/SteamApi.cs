@@ -313,6 +313,22 @@ namespace Steamworks.Core
             }
         }
 
+        private static SteamController m_steamController;
+        public static unsafe SteamController Controller
+        {
+            get
+            {
+                if (m_steamController != null)
+                {
+                    return m_steamController;
+                }
+
+                m_steamController = new SteamController(GetSteamApiContext()->m_pController);
+
+                return m_steamController;
+            }
+        }
+
         #endregion
 
         #region Windows Interop

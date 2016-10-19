@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace Steamworks.Core.Test
@@ -15,6 +16,21 @@ namespace Steamworks.Core.Test
             Console.WriteLine(SteamApi.GetHSteamUser());
             Console.WriteLine(SteamApi.Client.GetIpcCallCount());
             Console.WriteLine(SteamApi.Friends.GetPersonaName());
+
+            Console.WriteLine(SteamApi.Controller.Init());
+
+            SteamApi.Controller.RunFrame();
+
+            var a_listOfControllerIds = new ulong[16];
+
+            var a_unmanagedHandle = GCHandle.Alloc(a_listOfControllerIds, GCHandleType.Pinned);
+
+            var a_totalControllers = SteamApi.Controller.GetConnectedControllers(ref a_listOfControllerIds);
+
+            a_unmanagedHandle.Free();
+
+            Console.WriteLine(a_totalControllers);
+            Console.WriteLine(string.Join(",", a_listOfControllerIds));
         }
     }
 }

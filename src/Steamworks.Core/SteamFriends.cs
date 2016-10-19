@@ -254,347 +254,610 @@ namespace Steamworks.Core
 
         public override ulong SetPersonaName(string c_pchPersonaName)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_SetPersonaName(m_instancePtr, new SafeUtf8String(c_pchPersonaName));
+
+            return a_result;
         }
 
         public override uint GetPersonaState()
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetPersonaState(m_instancePtr);
+
+            return a_result;
         }
 
         public override int GetFriendCount(int c_iFriendFlags)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetFriendCount(m_instancePtr, c_iFriendFlags);
+
+            return a_result;
         }
 
         public override ulong GetFriendByIndex(int c_iFriend, int c_iFriendFlags)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetFriendByIndex(m_instancePtr, c_iFriend, c_iFriendFlags);
+
+            return a_result;
         }
 
         public override uint GetFriendRelationship(ulong c_steamIdFriend)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetFriendRelationship(m_instancePtr, c_steamIdFriend);
+
+            return a_result;
         }
 
         public override uint GetFriendPersonaState(ulong c_steamIdFriend)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetFriendPersonaState(m_instancePtr, c_steamIdFriend);
+
+            return a_result;
         }
 
         public override string GetFriendPersonaName(ulong c_steamIdFriend)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetFriendPersonaName(m_instancePtr, c_steamIdFriend);
+
+            return SafeUtf8String.ToString(a_result);
         }
 
         public override bool GetFriendGamePlayed(ulong c_steamIdFriend, out FriendGameInfo c_pFriendGameInfo)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            c_pFriendGameInfo = default(FriendGameInfo);
+
+            var a_result = SteamAPI_ISteamFriends_GetFriendGamePlayed(m_instancePtr, c_steamIdFriend, ref c_pFriendGameInfo);
+
+            return a_result;
         }
 
         public override string GetFriendPersonaNameHistory(ulong c_steamIdFriend, int c_iPersonaName)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetFriendPersonaNameHistory(m_instancePtr, c_steamIdFriend, c_iPersonaName);
+
+            return SafeUtf8String.ToString(a_result);
         }
 
         public override int GetFriendSteamLevel(ulong c_steamIdFriend)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetFriendSteamLevel(m_instancePtr, c_steamIdFriend);
+
+            return a_result;
         }
 
         public override string GetPlayerNickname(ulong c_steamIdPlayer)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetPlayerNickname(m_instancePtr, c_steamIdPlayer);
+
+            return SafeUtf8String.ToString(a_result);
         }
 
         public override int GetFriendsGroupCount()
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetFriendsGroupCount(m_instancePtr);
+
+            return a_result;
         }
 
         public override char GetFriendsGroupIdByIndex(int c_iFg)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetFriendsGroupIDByIndex(m_instancePtr, c_iFg);
+
+            return a_result;
         }
 
         public override string GetFriendsGroupName(char c_friendsGroupId)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetFriendsGroupName(m_instancePtr, c_friendsGroupId);
+
+            return SafeUtf8String.ToString(a_result);
         }
 
         public override int GetFriendsGroupMembersCount(char c_friendsGroupId)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetFriendsGroupMembersCount(m_instancePtr, c_friendsGroupId);
+
+            return a_result;
         }
 
-        public override void GetFriendsGroupMembersList(char c_friendsGroupId, out CSteamId[] c_pOutSteamIdMembers)
+        public override void GetFriendsGroupMembersList(char c_friendsGroupId, out CSteamId[] c_cSteamIds, int c_nMembersCount)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            c_cSteamIds = new CSteamId[c_nMembersCount];
+
+            SteamAPI_ISteamFriends_GetFriendsGroupMembersList(m_instancePtr, c_friendsGroupId, c_cSteamIds, c_nMembersCount);
         }
 
         public override bool HasFriend(ulong c_steamIdFriend, int c_iFriendFlags)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_HasFriend(m_instancePtr, c_steamIdFriend, c_iFriendFlags);
+
+            return a_result;
         }
 
         public override int GetClanCount()
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetClanCount(m_instancePtr);
+
+            return a_result;
         }
 
         public override ulong GetClanByIndex(int c_iClan)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetClanByIndex(m_instancePtr, c_iClan);
+
+            return a_result;
         }
 
         public override string GetClanName(ulong c_steamIdClan)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetClanName(m_instancePtr, c_steamIdClan);
+
+            return SafeUtf8String.ToString(a_result);
         }
 
         public override string GetClanTag(ulong c_steamIdClan)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetClanTag(m_instancePtr, c_steamIdClan);
+
+            return SafeUtf8String.ToString(a_result);
         }
 
         public override bool GetClanActivityCounts(ulong c_steamIdClan, ref int c_pnOnline, ref int c_pnInGame, ref int c_pnChatting)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetClanActivityCounts(m_instancePtr, c_steamIdClan, ref c_pnOnline, ref c_pnInGame, ref c_pnChatting);
+
+            return a_result;
         }
 
         public override ulong DownloadClanActivityCounts(CSteamId[] c_psteamIdClans)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException("TODO FIXME");
+            //CheckIfUsable();
+
+            //var a_result = SteamAPI_ISteamFriends_DownloadClanActivityCounts(m_instancePtr, c_psteamIdClans);
+
+            //return a_result;
         }
 
         public override int GetFriendCountFromSource(ulong c_steamIdSource)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetFriendCountFromSource(m_instancePtr, c_steamIdSource);
+
+            return a_result;
         }
 
         public override ulong GetFriendFromSourceByIndex(ulong c_steamIdSource, int c_iFriend)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetFriendFromSourceByIndex(m_instancePtr, c_steamIdSource, c_iFriend);
+
+            return a_result;
         }
 
         public override bool IsUserInSource(ulong c_steamIdUser, ulong c_steamIdSource)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_IsUserInSource(m_instancePtr, c_steamIdUser, c_steamIdSource);
+
+            return a_result;
         }
 
         public override void SetInGameVoiceSpeaking(ulong c_steamIdUser, bool c_bSpeaking)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            SteamAPI_ISteamFriends_SetInGameVoiceSpeaking(m_instancePtr, c_steamIdUser, c_bSpeaking);
         }
 
         public override void ActivateGameOverlay(string c_pchDialog)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            SteamAPI_ISteamFriends_ActivateGameOverlay(m_instancePtr, new SafeUtf8String(c_pchDialog));
         }
 
         public override void ActivateGameOverlayToUser(string c_pchDialog, ulong c_steamId)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            SteamAPI_ISteamFriends_ActivateGameOverlayToUser(m_instancePtr, new SafeUtf8String(c_pchDialog), c_steamId);
         }
 
         public override void ActivateGameOverlayToWebPage(string c_pchUrl)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            SteamAPI_ISteamFriends_ActivateGameOverlayToWebPage(m_instancePtr, new SafeUtf8String(c_pchUrl));
         }
 
         public override void ActivateGameOverlayToStore(uint c_nAppId, char c_eFlag)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            SteamAPI_ISteamFriends_ActivateGameOverlayToStore(m_instancePtr, c_nAppId, c_eFlag);
         }
 
         public override void SetPlayedWith(ulong c_steamIdUserPlayedWith)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            SteamAPI_ISteamFriends_SetPlayedWith(m_instancePtr, c_steamIdUserPlayedWith);
         }
 
         public override void ActivateGameOverlayInviteDialog(ulong c_steamIdLobby)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            SteamAPI_ISteamFriends_ActivateGameOverlayInviteDialog(m_instancePtr, c_steamIdLobby);
         }
 
         public override int GetSmallFriendAvatar(ulong c_steamIdFriend)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetSmallFriendAvatar(m_instancePtr, c_steamIdFriend);
+
+            return a_result;
         }
 
         public override int GetMediumFriendAvatar(ulong c_steamIdFriend)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetMediumFriendAvatar(m_instancePtr, c_steamIdFriend);
+
+            return a_result;
         }
 
         public override int GetLargeFriendAvatar(ulong c_steamIdFriend)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetLargeFriendAvatar(m_instancePtr, c_steamIdFriend);
+
+            return a_result;
         }
 
         public override bool RequestUserInformation(ulong c_steamIdUser, bool c_bRequireNameOnly)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_RequestUserInformation(m_instancePtr, c_steamIdUser, c_bRequireNameOnly);
+
+            return a_result;
         }
 
         public override ulong RequestClanOfficerList(ulong c_steamIdClan)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_RequestClanOfficerList(m_instancePtr, c_steamIdClan);
+
+            return a_result;
         }
 
         public override ulong GetClanOwner(ulong c_steamIdClan)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetClanOwner(m_instancePtr, c_steamIdClan);
+
+            return a_result;
         }
 
         public override int GetClanOfficerCount(ulong c_steamIdClan)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetClanOfficerCount(m_instancePtr, c_steamIdClan);
+
+            return a_result;
         }
 
         public override ulong GetClanOfficerByIndex(ulong c_steamIdClan, int c_iOfficer)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetClanOfficerByIndex(m_instancePtr, c_steamIdClan, c_iOfficer);
+
+            return a_result;
         }
 
         public override uint GetUserRestrictions()
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetUserRestrictions(m_instancePtr);
+
+            return a_result;
         }
 
         public override bool SetRichPresence(string c_pchKey, string c_pchValue)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_SetRichPresence(m_instancePtr, new SafeUtf8String(c_pchKey), new SafeUtf8String(c_pchValue));
+
+            return a_result;
         }
 
         public override void ClearRichPresence()
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            SteamAPI_ISteamFriends_ClearRichPresence(m_instancePtr);
         }
 
         public override string GetFriendRichPresence(ulong c_steamIdFriend, string c_pchKey)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetFriendRichPresence(m_instancePtr, c_steamIdFriend, new SafeUtf8String(c_pchKey));
+
+            return SafeUtf8String.ToString(a_result);
         }
 
         public override int GetFriendRichPresenceKeyCount(ulong c_steamIdFriend)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetFriendRichPresenceKeyCount(m_instancePtr, c_steamIdFriend);
+
+            return a_result;
         }
 
         public override string GetFriendRichPresenceKeyByIndex(ulong c_steamIdFriend, int c_iKey)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetFriendRichPresenceKeyByIndex(m_instancePtr, c_steamIdFriend, c_iKey);
+
+            return SafeUtf8String.ToString(a_result);
         }
 
         public override void RequestFriendRichPresence(ulong c_steamIdFriend)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            SteamAPI_ISteamFriends_RequestFriendRichPresence(m_instancePtr, c_steamIdFriend);
         }
 
         public override bool InviteUserToGame(ulong c_steamIdFriend, string c_pchConnectString)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_InviteUserToGame(m_instancePtr, c_steamIdFriend, new SafeUtf8String(c_pchConnectString));
+
+            return a_result;
         }
 
         public override int GetCoplayFriendCount()
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetCoplayFriendCount(m_instancePtr);
+
+            return a_result;
         }
 
         public override ulong GetCoplayFriend(int c_iCoplayFriend)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetCoplayFriend(m_instancePtr, c_iCoplayFriend);
+
+            return a_result;
         }
 
         public override int GetFriendCoplayTime(ulong c_steamIdFriend)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetFriendCoplayTime(m_instancePtr, c_steamIdFriend);
+
+            return a_result;
         }
 
         public override uint GetFriendCoplayGame(ulong c_steamIdFriend)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetFriendCoplayGame(m_instancePtr, c_steamIdFriend);
+
+            return a_result;
         }
 
         public override ulong JoinClanChatRoom(ulong c_steamIdClan)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_JoinClanChatRoom(m_instancePtr, c_steamIdClan);
+
+            return a_result;
         }
 
         public override bool LeaveClanChatRoom(ulong c_steamIdClan)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_LeaveClanChatRoom(m_instancePtr, c_steamIdClan);
+
+            return a_result;
         }
 
         public override int GetClanChatMemberCount(ulong c_steamIdClan)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetClanChatMemberCount(m_instancePtr, c_steamIdClan);
+
+            return a_result;
         }
 
         public override ulong GetChatMemberByIndex(ulong c_steamIdClan, int c_iUser)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetChatMemberByIndex(m_instancePtr, c_steamIdClan, c_iUser);
+
+            return a_result;
         }
 
         public override bool SendClanChatMessage(ulong c_steamIdClanChat, string c_pchText)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_SendClanChatMessage(m_instancePtr, c_steamIdClanChat, new SafeUtf8String(c_pchText));
+
+            return a_result;
         }
 
         public override int GetClanChatMessage(ulong c_steamIdClanChat, int c_iMessage, IntPtr c_prgchText, int c_cchTextMax, ref uint c_peChatEntryType, out CSteamId c_psteamidChatter)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            c_psteamidChatter = default(CSteamId);
+
+            var a_result = SteamAPI_ISteamFriends_GetClanChatMessage(m_instancePtr, c_steamIdClanChat, c_iMessage, c_prgchText, c_cchTextMax, ref c_peChatEntryType, ref c_psteamidChatter);
+
+            return a_result;
         }
 
         public override bool IsClanChatAdmin(ulong c_steamIdClanChat, ulong c_steamIdUser)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_IsClanChatAdmin(m_instancePtr, c_steamIdClanChat, c_steamIdUser);
+
+            return a_result;
         }
 
         public override bool IsClanChatWindowOpenInSteam(ulong c_steamIdClanChat)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_IsClanChatWindowOpenInSteam(m_instancePtr, c_steamIdClanChat);
+
+            return a_result;
         }
 
         public override bool OpenClanChatWindowInSteam(ulong c_steamIdClanChat)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_OpenClanChatWindowInSteam(m_instancePtr, c_steamIdClanChat);
+
+            return a_result;
         }
 
         public override bool CloseClanChatWindowInSteam(ulong c_steamIdClanChat)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_CloseClanChatWindowInSteam(m_instancePtr, c_steamIdClanChat);
+
+            return a_result;
         }
 
         public override bool SetListenForFriendsMessages(bool c_bInterceptEnabled)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_SetListenForFriendsMessages(m_instancePtr, c_bInterceptEnabled);
+
+            return a_result;
         }
 
         public override bool ReplyToFriendMessage(ulong c_steamIdFriend, string c_pchMsgToSend)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_ReplyToFriendMessage(m_instancePtr, c_steamIdFriend, new SafeUtf8String(c_pchMsgToSend));
+
+            return a_result;
         }
 
         public override int GetFriendMessage(ulong c_steamIdFriend, int c_iMessageId, IntPtr c_pvData, int c_cubData, ref uint c_peChatEntryType)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetFriendMessage(m_instancePtr, c_steamIdFriend, c_iMessageId, c_pvData, c_cubData, ref c_peChatEntryType);
+
+            return a_result;
         }
 
         public override ulong GetFollowerCount(ulong c_steamId)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_GetFollowerCount(m_instancePtr, c_steamId);
+
+            return a_result;
         }
 
         public override ulong IsFollowing(ulong c_steamId)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_IsFollowing(m_instancePtr, c_steamId);
+
+            return a_result;
         }
 
         public override ulong EnumerateFollowingList(uint c_unStartIndex)
         {
-            throw new NotImplementedException();
+            CheckIfUsable();
+
+            var a_result = SteamAPI_ISteamFriends_EnumerateFollowingList(m_instancePtr, c_unStartIndex);
+
+            return a_result;
         }
 
         #endregion
@@ -636,7 +899,7 @@ namespace Steamworks.Core
 
         public abstract int GetFriendsGroupMembersCount(char c_friendsGroupId);
 
-        public abstract void GetFriendsGroupMembersList(char c_friendsGroupId, out CSteamId[] c_pOutSteamIdMembers);
+        public abstract void GetFriendsGroupMembersList(char c_friendsGroupId, out CSteamId[] c_pOutSteamIdMembers, int c_nMembersCount);
 
         public abstract bool HasFriend(ulong c_steamIdFriend, int c_iFriendFlags);
 
