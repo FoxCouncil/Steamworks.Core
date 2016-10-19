@@ -21,7 +21,7 @@ namespace Steamworks.Core.Test
 
             SteamApi.Controller.RunFrame();
 
-            var a_listOfControllerIds = new ulong[16];
+            var a_listOfControllerIds = new ulong[SteamController.STEAM_CONTROLLER_MAX_COUNT];
 
             var a_unmanagedHandle = GCHandle.Alloc(a_listOfControllerIds, GCHandleType.Pinned);
 

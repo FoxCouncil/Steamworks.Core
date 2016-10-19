@@ -313,6 +313,23 @@ namespace Steamworks.Core
             }
         }
 
+        private static SteamUtils m_steamUtils;
+
+        public static unsafe SteamUtils Utils
+        {
+            get
+            {
+                if (m_steamUtils != null)
+                {
+                    return m_steamUtils;
+                }
+
+                m_steamUtils = new SteamUtils(GetSteamApiContext()->m_pSteamUtils);
+
+                return m_steamUtils;
+            }
+        }
+
         private static SteamController m_steamController;
         public static unsafe SteamController Controller
         {

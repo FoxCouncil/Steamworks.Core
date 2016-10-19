@@ -23,6 +23,18 @@ namespace Steamworks.Core
             }
         }
 
+        #region Constants
+
+        public const int STEAM_CONTROLLER_MAX_COUNT = 16;
+        public const int STEAM_CONTROLLER_MAX_ANALOG_ACTIONS = 16;
+        public const int STEAM_CONTROLLER_MAX_DIGITAL_ACTIONS = 128;
+        public const int STEAM_CONTROLLER_MAX_ORIGINS = 8;
+        public const ulong STEAM_CONTROLLER_HANDLE_ALL_CONTROLLERS = ulong.MaxValue;
+        public const float STEAM_CONTROLLER_MIN_ANALOG_ACTION_DATA = -1.0f;
+        public const float STEAM_CONTROLLER_MAX_ANALOG_ACTION_DATA = 1.0f;
+
+        #endregion
+
         #region Native Methods
 
         [DllImport(SteamApi.STEAMWORKS_MODULE_NAME, EntryPoint = "SteamAPI_ISteamController_Init")]
