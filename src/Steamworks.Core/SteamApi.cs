@@ -330,7 +330,42 @@ namespace Steamworks.Core
             }
         }
 
+        private static SteamMatchmaking m_steamMatchmaking;
+
+        public static unsafe SteamMatchmaking Matchmaking
+        {
+            get
+            {
+                if (m_steamMatchmaking != null)
+                {
+                    return m_steamMatchmaking;
+                }
+
+                m_steamMatchmaking = new SteamMatchmaking(GetSteamApiContext()->m_pSteamMatchmaking);
+
+                return m_steamMatchmaking;
+            }
+        }
+
+        private static SteamUserStats m_steamUserStats;
+
+        public static unsafe SteamUserStats UserStats
+        {
+            get
+            {
+                if (m_steamUserStats != null)
+                {
+                    return m_steamUserStats;
+                }
+
+                m_steamUserStats = new SteamUserStats(GetSteamApiContext()->m_pSteamUserStats);
+
+                return m_steamUserStats;
+            }
+        }
+
         private static SteamController m_steamController;
+
         public static unsafe SteamController Controller
         {
             get
