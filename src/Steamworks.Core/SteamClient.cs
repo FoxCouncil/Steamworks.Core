@@ -1,8 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿//   !!  // Steamworks.Core - SteamClient.cs
+// *.-". // Created: 2016-10-16 [6:24 PM]
+//  | |  // Copyright 2016 // MIT License // The Fox Council 
+// Modified by: Fox Diller on 2016-10-22 @ 3:03 PM
+
+#region Usings
+
+using System;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
+
+#endregion
 
 namespace Steamworks.Core
 {

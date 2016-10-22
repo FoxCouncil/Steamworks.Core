@@ -1,7 +1,7 @@
 ﻿//   !!  // Steamworks.Core - SteamApi.cs
 // *.-". // Created: 2016-10-14 [8:06 PM]
 //  | |  // Copyright 2016 // MIT License // The Fox Council 
-// Modified by: Fox Diller on 2016-10-15 @ 10:25 PM
+// Modified by: Fox Diller on 2016-10-22 @ 3:02 PM
 
 #region Usings
 
@@ -248,11 +248,11 @@ namespace Steamworks.Core
 
                 return Marshal.GetDelegateForFunctionPointer<TDelegate>(a_procAddress);
             }
-            else if(RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
                 throw new NotImplementedException();
             }
-            else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
                 throw new NotImplementedException();
             }
@@ -364,6 +364,125 @@ namespace Steamworks.Core
             }
         }
 
+        private static SteamApps m_steamApps;
+
+        public static unsafe SteamApps Apps
+        {
+            get
+            {
+                if (m_steamApps != null)
+                {
+                    return m_steamApps;
+                }
+
+                m_steamApps = new SteamApps(GetSteamApiContext()->m_pSteamApps);
+
+                return m_steamApps;
+            }
+        }
+
+        private static SteamMatchmakingServers m_steamMatchmakingServers;
+
+        public static unsafe SteamMatchmakingServers MatchmakingServers
+        {
+            get
+            {
+                if (m_steamMatchmakingServers != null)
+                {
+                    return m_steamMatchmakingServers;
+                }
+
+                m_steamMatchmakingServers = new SteamMatchmakingServers(GetSteamApiContext()->m_pSteamMatchmakingServers);
+
+                return m_steamMatchmakingServers;
+            }
+        }
+
+        private static SteamNetworking m_steamNetworking;
+
+        public static unsafe SteamNetworking Networking
+        {
+            get
+            {
+                if (m_steamNetworking != null)
+                {
+                    return m_steamNetworking;
+                }
+
+                m_steamNetworking = new SteamNetworking(GetSteamApiContext()->m_pSteamNetworking);
+
+                return m_steamNetworking;
+            }
+        }
+
+        private static SteamRemoteStorage m_steamRemoteStorage;
+
+        public static unsafe SteamRemoteStorage RemoteStorage
+        {
+            get
+            {
+                if (m_steamRemoteStorage != null)
+                {
+                    return m_steamRemoteStorage;
+                }
+
+                m_steamRemoteStorage = new SteamRemoteStorage(GetSteamApiContext()->m_pSteamRemoteStorage);
+
+                return m_steamRemoteStorage;
+            }
+        }
+
+        private static SteamScreenshots m_steamScreenshots;
+
+        public static unsafe SteamScreenshots Screenshots
+        {
+            get
+            {
+                if (m_steamScreenshots != null)
+                {
+                    return m_steamScreenshots;
+                }
+
+                m_steamScreenshots = new SteamScreenshots(GetSteamApiContext()->m_pSteamScreenshots);
+
+                return m_steamScreenshots;
+            }
+        }
+
+        private static SteamHttp m_steamHttp;
+
+        public static unsafe SteamHttp Http
+        {
+            get
+            {
+                if (m_steamHttp != null)
+                {
+                    return m_steamHttp;
+                }
+
+                m_steamHttp = new SteamHttp(GetSteamApiContext()->m_pSteamHTTP);
+
+                return m_steamHttp;
+            }
+        }
+
+        private static SteamUnifiedMessages m_steamUnifiedMessages;
+
+        public static unsafe SteamUnifiedMessages UnifiedMessages
+        {
+            get
+            {
+                if (m_steamUnifiedMessages != null)
+                {
+                    return m_steamUnifiedMessages;
+                }
+
+                m_steamUnifiedMessages = new SteamUnifiedMessages(GetSteamApiContext()->m_pSteamUnifiedMessages);
+
+                return m_steamUnifiedMessages;
+            }
+        }
+
         private static SteamController m_steamController;
 
         public static unsafe SteamController Controller
@@ -378,6 +497,74 @@ namespace Steamworks.Core
                 m_steamController = new SteamController(GetSteamApiContext()->m_pController);
 
                 return m_steamController;
+            }
+        }
+
+        private static SteamUgc m_steamUgc;
+
+        public static unsafe SteamUgc Ugc
+        {
+            get
+            {
+                if (m_steamUgc != null)
+                {
+                    return m_steamUgc;
+                }
+
+                m_steamUgc = new SteamUgc(GetSteamApiContext()->m_pSteamUGC);
+
+                return m_steamUgc;
+            }
+        }
+
+        private static SteamAppList m_steamAppList;
+
+        public static unsafe SteamAppList AppList
+        {
+            get
+            {
+                if (m_steamAppList != null)
+                {
+                    return m_steamAppList;
+                }
+
+                m_steamAppList = new SteamAppList(GetSteamApiContext()->m_pSteamAppList);
+
+                return m_steamAppList;
+            }
+        }
+
+        private static SteamMusic m_steamMusic;
+
+        public static unsafe SteamMusic Music
+        {
+            get
+            {
+                if (m_steamMusic != null)
+                {
+                    return m_steamMusic;
+                }
+
+                m_steamMusic = new SteamMusic(GetSteamApiContext()->m_pSteamMusic);
+
+                return m_steamMusic;
+            }
+        }
+
+        private static SteamMusicRemote m_steamMusicRemote;
+
+        public static unsafe SteamMusicRemote MusicRemote
+        {
+            get
+            {
+                if (m_steamMusicRemote != null)
+                {
+                    return m_steamMusicRemote;
+                }
+
+                m_steamMusicRemote = new SteamMusicRemote(GetSteamApiContext()->m_pSteamMusicRemote);
+
+                return m_steamMusicRemote;
             }
         }
 
@@ -397,6 +584,5 @@ namespace Steamworks.Core
         private static extern IntPtr LoadLibrary(string c_lpFileName);
 
         #endregion
-
     }
 }

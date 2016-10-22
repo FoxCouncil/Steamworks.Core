@@ -1,8 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿//   !!  // Steamworks.Core - SteamController.cs
+// *.-". // Created: 2016-10-18 [7:51 PM]
+//  | |  // Copyright 2016 // MIT License // The Fox Council 
+// Modified by: Fox Diller on 2016-10-22 @ 3:03 PM
+
+#region Usings
+
+using System;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
+
+#endregion
 
 namespace Steamworks.Core
 {
@@ -333,11 +339,9 @@ namespace Steamworks.Core
     [StructLayout(LayoutKind.Sequential)]
     public struct ControllerDigitalActionData
     {
-        [MarshalAs(UnmanagedType.I1)]
-        public bool State;
+        [MarshalAs(UnmanagedType.I1)] public bool State;
 
-        [MarshalAs(UnmanagedType.I1)]
-        public bool Active;
+        [MarshalAs(UnmanagedType.I1)] public bool Active;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -347,8 +351,7 @@ namespace Steamworks.Core
         public float X;
         public float Y;
 
-        [MarshalAs(UnmanagedType.I1)]
-        public bool Active;
+        [MarshalAs(UnmanagedType.I1)] public bool Active;
     }
 
     [StructLayout(LayoutKind.Sequential)]

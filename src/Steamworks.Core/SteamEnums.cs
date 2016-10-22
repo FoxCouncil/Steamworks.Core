@@ -1,7 +1,7 @@
 ﻿//   !!  // Steamworks.Core - SteamEnums.cs
 // *.-". // Created: 2016-10-17 [11:09 PM]
 //  | |  // Copyright 2016 // MIT License // The Fox Council 
-// Modified by: Fox Diller on 2016-10-17 @ 11:10 PM
+// Modified by: Fox Diller on 2016-10-22 @ 3:03 PM
 
 namespace Steamworks.Core
 {

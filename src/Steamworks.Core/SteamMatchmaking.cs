@@ -1,5 +1,14 @@
-﻿using System;
+﻿//   !!  // Steamworks.Core - SteamMatchmaking.cs
+// *.-". // Created: 2016-10-19 [7:51 PM]
+//  | |  // Copyright 2016 // MIT License // The Fox Council 
+// Modified by: Fox Diller on 2016-10-22 @ 3:03 PM
+
+#region Usings
+
+using System;
 using System.Runtime.InteropServices;
+
+#endregion
 
 namespace Steamworks.Core
 {
@@ -16,7 +25,7 @@ namespace Steamworks.Core
         {
             if (m_instancePtr == IntPtr.Zero)
             {
-                throw new InvalidOperationException("Steam Controller Not Initialized!");
+                throw new InvalidOperationException("Steam Matchmaking Not Initialized!");
             }
         }
 

@@ -31,6 +31,8 @@ namespace Steamworks.Core.Test
 
             Console.WriteLine(a_totalControllers);
             Console.WriteLine(string.Join(",", a_listOfControllerIds));
+
+            Console.ReadKey();
         }
     }
 }

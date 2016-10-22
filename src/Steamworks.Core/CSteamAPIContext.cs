@@ -1,7 +1,7 @@
 ﻿//   !!  // Steamworks.Core - CSteamAPIContext.cs
-// *.-". // Created: 2016-10-16 [6:21 PM]
+// *.-". // Created: 2016-10-17 [6:45 PM]
 //  | |  // Copyright 2016 // MIT License // The Fox Council 
-// Modified by: Fox Diller on 2016-10-16 @ 6:21 PM
+// Modified by: Fox Diller on 2016-10-22 @ 3:02 PM
 
 #region Usings
 
@@ -13,7 +13,7 @@ using System.Runtime.InteropServices;
 namespace Steamworks.Core
 {
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe struct CSteamApiContext
+    public struct CSteamApiContext
     {
         public IntPtr m_pSteamClient; // class ISteamClient *
         public IntPtr m_pSteamUser; // class ISteamUser *
@@ -29,7 +29,7 @@ namespace Steamworks.Core
         public IntPtr m_pSteamHTTP; // class ISteamHTTP *
         public IntPtr m_pSteamUnifiedMessages; // class ISteamUnifiedMessages *
         public IntPtr m_pController; // class ISteamController *
-        public IntPtr m_pSteamUGC; // class ISteamUGC *
+        public IntPtr m_pSteamUGC; // class ISteamUgc *
         public IntPtr m_pSteamAppList; // class ISteamAppList *
         public IntPtr m_pSteamMusic; // class ISteamMusic *
         public IntPtr m_pSteamMusicRemote; // class ISteamMusicRemote *
@@ -106,14 +106,14 @@ namespace Steamworks.Core
 
             if (m_pSteamMatchmaking == IntPtr.Zero)
             {
-                return false; 
+                return false;
             }
 
             m_pSteamMatchmakingServers = a_tempSteamClient.GetISteamMatchmakingServers(a_steamUser, a_steamPipe, SteamApi.STEAMMATCHMAKINGSERVERS_INTERFACE_VERSION);
 
             if (m_pSteamMatchmakingServers == IntPtr.Zero)
             {
-                return false; 
+                return false;
             }
 
             m_pSteamUserStats = a_tempSteamClient.GetISteamUserStats(a_steamUser, a_steamPipe, SteamApi.STEAMUSERSTATS_INTERFACE_VERSION);

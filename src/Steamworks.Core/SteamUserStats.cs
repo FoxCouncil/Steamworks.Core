@@ -1,5 +1,14 @@
-﻿using System;
+﻿//   !!  // Steamworks.Core - SteamUserStats.cs
+// *.-". // Created: 2016-10-19 [11:28 PM]
+//  | |  // Copyright 2016 // MIT License // The Fox Council 
+// Modified by: Fox Diller on 2016-10-22 @ 3:03 PM
+
+#region Usings
+
+using System;
 using System.Runtime.InteropServices;
+
+#endregion
 
 namespace Steamworks.Core
 {

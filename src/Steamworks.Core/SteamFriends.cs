@@ -1,8 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿//   !!  // Steamworks.Core - SteamFriends.cs
+// *.-". // Created: 2016-10-17 [11:02 PM]
+//  | |  // Copyright 2016 // MIT License // The Fox Council 
+// Modified by: Fox Diller on 2016-10-22 @ 3:03 PM
+
+#region Usings
+
+using System;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
+
+#endregion
 
 namespace Steamworks.Core
 {
@@ -19,7 +25,7 @@ namespace Steamworks.Core
         {
             if (m_instancePtr == IntPtr.Zero)
             {
-                throw new InvalidOperationException("Steam Client Not Initialized!");
+                throw new InvalidOperationException("Steam Friends Not Initialized!");
             }
         }
 
@@ -48,6 +54,7 @@ namespace Steamworks.Core
 
         [DllImport(SteamApi.STEAMWORKS_MODULE_NAME, EntryPoint = "SteamAPI_ISteamFriends_GetFriendPersonaName")]
         internal static extern IntPtr SteamAPI_ISteamFriends_GetFriendPersonaName(IntPtr c_instancePtr, ulong c_steamIdFriend);
+
         [DllImport(SteamApi.STEAMWORKS_MODULE_NAME, EntryPoint = "SteamAPI_ISteamFriends_GetFriendGamePlayed")]
         internal static extern bool SteamAPI_ISteamFriends_GetFriendGamePlayed(IntPtr c_instancePtr, ulong c_steamIdFriend, ref FriendGameInfo c_pFriendGameInfo);
 

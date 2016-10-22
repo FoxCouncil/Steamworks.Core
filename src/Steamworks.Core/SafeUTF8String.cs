@@ -1,7 +1,7 @@
-﻿//   !!  // Steamworks.Core - SafeUtf8String.cs
+﻿//   !!  // Steamworks.Core - SafeUTF8String.cs
 // *.-". // Created: 2016-10-16 [3:01 PM]
 //  | |  // Copyright 2016 // MIT License // The Fox Council 
-// Modified by: Fox Diller on 2016-10-16 @ 3:16 PM
+// Modified by: Fox Diller on 2016-10-22 @ 3:02 PM
 
 #region Usings
 
@@ -34,22 +34,6 @@ namespace Steamworks.Core
             SetHandle(a_byteBuffer);
         }
 
-        #region Overrides of SafeHandle
-
-        protected override bool ReleaseHandle()
-        {
-            if (!IsInvalid)
-            {
-                Marshal.FreeHGlobal(handle);
-            }
-
-            return true;
-        }
-
-        public override bool IsInvalid { get; }
-
-        #endregion
-
         #region Static Methods
 
         public static string ToString(IntPtr c_nativeStringPtr)
@@ -77,6 +61,22 @@ namespace Steamworks.Core
 
             return Encoding.UTF8.GetString(a_buffer);
         }
+
+        #endregion
+
+        #region Overrides of SafeHandle
+
+        protected override bool ReleaseHandle()
+        {
+            if (!IsInvalid)
+            {
+                Marshal.FreeHGlobal(handle);
+            }
+
+            return true;
+        }
+
+        public override bool IsInvalid { get; }
 
         #endregion
     }
