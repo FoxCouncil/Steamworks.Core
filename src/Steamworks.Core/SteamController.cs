@@ -339,9 +339,8 @@ namespace Steamworks.Core
     [StructLayout(LayoutKind.Sequential)]
     public struct ControllerDigitalActionData
     {
-        [MarshalAs(UnmanagedType.I1)] public bool State;
-
-        [MarshalAs(UnmanagedType.I1)] public bool Active;
+        public byte State;
+        public byte Active;
     }
 
     [StructLayout(LayoutKind.Sequential)]
