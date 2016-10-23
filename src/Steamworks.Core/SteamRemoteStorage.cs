@@ -30,7 +30,19 @@ namespace Steamworks.Core
             }
         }
 
+        #region Callbacks
+
+        public delegate void RemoteStorageFileReadAsyncCompleteCallResult(RemoteStorageFileReadAsyncComplete c_pRemoteStorageFileReadAsyncComplete, bool c_bIoFailure);
+
+        #endregion
+
         #region Native Methods
+
+        [DllImport(SteamApi.STEAMWORKS_MODULE_NAME, EntryPoint = "CRemoteStorageFileReadAsyncComplete_t_SetCallResult")]
+        private static extern ulong CRemoteStorageFileReadAsyncComplete_t_SetCallResult(ulong c_hAPICall, RemoteStorageFileReadAsyncCompleteCallResult c_func);
+
+        [DllImport(SteamApi.STEAMWORKS_MODULE_NAME, EntryPoint = "CRemoteStorageFileReadAsyncComplete_t_RemoveCallResult")]
+        private static extern ulong CRemoteStorageFileReadAsyncComplete_t_RemoveCallResult(ulong c_handle);
 
         [DllImport(SteamApi.STEAMWORKS_MODULE_NAME, EntryPoint = "SteamAPI_ISteamRemoteStorage_FileWrite")]
         private static extern bool SteamAPI_ISteamRemoteStorage_FileWrite(IntPtr c_instancePtr, SafeUtf8String c_pchFile, IntPtr c_pvData, int c_cubData);
@@ -769,5 +781,14 @@ namespace Steamworks.Core
     {
         public SafeUtf8String m_ppStrings; // const char **
         public int m_nNumStrings;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct RemoteStorageFileReadAsyncComplete
+    {
+        public ulong FileReadAsync;
+        public EResult Result;
+        public uint Offset;
+        public uint Read;
     }
 }

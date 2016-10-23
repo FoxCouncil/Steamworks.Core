@@ -6,6 +6,7 @@
 #region Usings
 
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 #endregion
@@ -29,7 +30,43 @@ namespace Steamworks.Core
             }
         }
 
+        #region Callbacks
+
+        private readonly Dictionary<UserStatsReceivedCallback, ulong> m_userStatsReceivedCallbackRegistry = new Dictionary<UserStatsReceivedCallback, ulong>();
+
+        public delegate void UserStatsReceivedCallback(UserStatsReceived c_pUserStatsReceived);
+
+        public event UserStatsReceivedCallback UserStatsReceived
+        {
+            add
+            {
+                m_userStatsReceivedCallbackRegistry.Add(value, CUserStatsReceived_t_SetCallback(value));
+            }
+
+            remove
+            {
+                if (!m_userStatsReceivedCallbackRegistry.ContainsKey(value))
+                {
+                    return;
+                }
+
+                var a_handle = m_userStatsReceivedCallbackRegistry[value];
+
+                m_userStatsReceivedCallbackRegistry.Remove(value);
+
+                CUserStatsReceived_t_RemoveCallback(a_handle);
+            }
+        }
+
+        #endregion
+
         #region Native Methods
+
+        [DllImport(SteamApi.STEAMWORKS_MODULE_NAME, EntryPoint = "CUserStatsReceived_t_SetCallback")]
+        private static extern ulong CUserStatsReceived_t_SetCallback(UserStatsReceivedCallback c_func);
+
+        [DllImport(SteamApi.STEAMWORKS_MODULE_NAME, EntryPoint = "CUserStatsReceived_t_RemoveCallback")]
+        private static extern ulong CUserStatsReceived_t_RemoveCallback(ulong c_handle);
 
         [DllImport(SteamApi.STEAMWORKS_MODULE_NAME, EntryPoint = "SteamAPI_ISteamUserStats_RequestCurrentStats")]
         private static extern bool SteamAPI_ISteamUserStats_RequestCurrentStats(IntPtr c_instancePtr);
@@ -614,5 +651,13 @@ namespace Steamworks.Core
         public int Score; // score as set in the leaderboard
         public int Details; // number of int32 details available for this entry
         public ulong Ugc; // handle for UGC attached to the entry
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct UserStatsReceived
+    {
+        public ulong GameID;
+        public EResult Result;
+        public ulong SteamIDUser;
     }
 }

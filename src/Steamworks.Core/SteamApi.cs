@@ -568,6 +568,57 @@ namespace Steamworks.Core
             }
         }
 
+        private static SteamHtmlSurface m_steamHtmlSurface;
+
+        public static unsafe SteamHtmlSurface HtmlSurface
+        {
+            get
+            {
+                if (m_steamHtmlSurface != null)
+                {
+                    return m_steamHtmlSurface;
+                }
+
+                m_steamHtmlSurface = new SteamHtmlSurface(GetSteamApiContext()->m_pSteamHTMLSurface);
+
+                return m_steamHtmlSurface;
+            }
+        }
+
+        private static SteamInventory m_steamInventory;
+
+        public static unsafe SteamInventory Inventory
+        {
+            get
+            {
+                if (m_steamInventory != null)
+                {
+                    return m_steamInventory;
+                }
+
+                m_steamInventory = new SteamInventory(GetSteamApiContext()->m_pSteamInventory);
+
+                return m_steamInventory;
+            }
+        }
+
+        private static SteamVideo m_steamVideo;
+
+        public static unsafe SteamVideo Video
+        {
+            get
+            {
+                if (m_steamVideo != null)
+                {
+                    return m_steamVideo;
+                }
+
+                m_steamVideo = new SteamVideo(GetSteamApiContext()->m_pSteamVideo);
+
+                return m_steamVideo;
+            }
+        }
+
         #endregion
 
         #region Windows Interop
