@@ -349,8 +349,7 @@ namespace Steamworks.Core
         public EControllerSourceMode Mode;
         public float X;
         public float Y;
-
-        [MarshalAs(UnmanagedType.I1)] public bool Active;
+        public byte Active;
     }
 
     [StructLayout(LayoutKind.Sequential)]

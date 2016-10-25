@@ -6,8 +6,10 @@
 #region Usings
 
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Security;
 using string8 = Steamworks.Core.SafeUtf8String;
 
 #endregion
@@ -36,10 +38,10 @@ namespace Steamworks.Core
 
         #region Versioning
 
-        public static readonly Version SteamworksCoreVersion = new Version(1, 0, 0, 0);
+        public static readonly Version SteamworksCoreVersion = new Version(0, 1, 3, 0);
 
         public static readonly Version SteamApiVersion = new Version(1, 38);
-        public static readonly Version SteamApiDllVersion = new Version(3, 64, 82, 82);
+        public static readonly Version SteamApiDllVersion = new Version(3, 62, 82, 82);
 
 
         private const string kSteamworksWin32ModuleName = "steam_api.dll";
@@ -83,6 +85,10 @@ namespace Steamworks.Core
         #endregion
 
         private static bool m_isInitialized;
+
+        private static IntPtr m_libProcAddress;
+
+        private static IntPtr m_callbackCounterAndContext;
 
         /// <summary>Your Steam AppID, default(480) - Spacewar!</summary>
         public static uint AppId { get; set; } = 480;
@@ -142,6 +148,14 @@ namespace Steamworks.Core
             if (m_isInitialized)
             {
                 throw new InvalidOperationException("SteamAPI already initialized!");
+            }
+
+            var a_moduleFileVersionInfo = FileVersionInfo.GetVersionInfo(STEAMWORKS_MODULE_NAME);
+            var a_moduleVersion = new Version(a_moduleFileVersionInfo.FileVersion);
+
+            if (a_moduleVersion != SteamApiDllVersion)
+            {
+                throw new VerificationException($"{STEAMWORKS_MODULE_NAME} is the wrong version! Expected <{SteamApiDllVersion}>, FileVersion <{a_moduleVersion}>");
             }
 
             if (File.Exists(STEAM_DEBUG_APP_ID_FILENAME))
@@ -225,7 +239,7 @@ namespace Steamworks.Core
             }
         }
 
-        public static TDelegate LoadSteamworksFunction<TDelegate>(string c_functionName)
+        private static TDelegate LoadSteamworksFunction<TDelegate>(string c_functionName)
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
@@ -248,10 +262,29 @@ namespace Steamworks.Core
 
                 return Marshal.GetDelegateForFunctionPointer<TDelegate>(a_procAddress);
             }
+
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                throw new NotImplementedException();
+                if (m_libProcAddress == IntPtr.Zero)
+                {
+                    m_libProcAddress = dlopen(kSteamworksLinux64ModuleName, DlLoadFlags.RTLD_NOW);
+
+                    if (m_libProcAddress == IntPtr.Zero)
+                    {
+                        throw new InvalidOperationException(Marshal.GetLastWin32Error().ToString());
+                    }
+                }
+
+                var a_procAddress = dlsym(m_libProcAddress, c_functionName);
+
+                if (a_procAddress == IntPtr.Zero)
+                {
+                    throw new InvalidOperationException($"{c_functionName} failed to load");
+                }
+
+                return Marshal.GetDelegateForFunctionPointer<TDelegate>(a_procAddress);
             }
+
             if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
                 throw new NotImplementedException();
@@ -625,14 +658,36 @@ namespace Steamworks.Core
 
         private const string kKernel32ModuleName = "kernel32.dll";
 
-        private static IntPtr m_libProcAddress;
-        private static IntPtr m_callbackCounterAndContext;
+        [DllImport(kKernel32ModuleName, SetLastError = true, CharSet = CharSet.Unicode)]
+        private static extern IntPtr LoadLibrary(string c_lpFileName);
 
         [DllImport(kKernel32ModuleName, CharSet = CharSet.Ansi, ExactSpelling = true, SetLastError = true)]
         private static extern IntPtr GetProcAddress(IntPtr c_hModule, string c_procName);
 
-        [DllImport(kKernel32ModuleName, SetLastError = true, CharSet = CharSet.Unicode)]
-        private static extern IntPtr LoadLibrary(string c_lpFileName);
+        #endregion
+
+        #region Linux Interop
+
+        private const string kDlModuleName = "dl";
+
+        [DllImport(kDlModuleName)]
+        private static extern IntPtr dlopen([MarshalAs(UnmanagedType.LPTStr)] string c_filename, DlLoadFlags c_flags);
+
+        [DllImport(kDlModuleName)]
+        private static extern IntPtr dlsym(IntPtr c_handle, [MarshalAs(UnmanagedType.LPTStr)] string c_symbol);
+
+        // ReSharper disable InconsistentNaming
+        private enum DlLoadFlags : int
+        {
+            RTLD_LAZY = 0x0001,
+            RTLD_NOW = 0x0002,
+            RTLD_GLOBAL = 0x0100,
+            RTLD_LOCAL = 0x0000,
+            RTLD_NOSHARE = 0x1000,
+            RTLD_EXE = 0x2000,
+            RTLD_SCRIPT = 0x4000
+        }
+        // ReSharper enable InconsistentNaming
 
         #endregion
     }
