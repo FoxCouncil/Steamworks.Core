@@ -38,7 +38,7 @@ namespace Steamworks.Core
 
         #region Versioning
 
-        public static readonly Version SteamworksCoreVersion = new Version(0, 1, 3, 0);
+        public static readonly Version SteamworksCoreVersion = new Version(0, 2, 1, 0);
 
         public static readonly Version SteamApiVersion = new Version(1, 38);
         public static readonly Version SteamApiDllVersion = new Version(3, 62, 82, 82);
