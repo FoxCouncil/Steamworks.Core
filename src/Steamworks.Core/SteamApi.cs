@@ -24,6 +24,8 @@ namespace Steamworks.Core
 
         public delegate bool RestartAppIfNecessaryFunc(uint c_ownAppId);
 
+        public delegate void RunCallbacksFunc();
+
         public delegate void ShutdownFunc();
 
         public delegate uint GetHSteamUserFunc();
@@ -120,6 +122,14 @@ namespace Steamworks.Core
         public static RestartAppIfNecessaryFunc RestartAppIfNecessary { get; private set; }
 
         /// <summary>
+        /// RunCallbacks is safe to call from multiple threads simultaneously,
+        /// but if you choose to do this, callback code could be executed on any thread.
+        /// One alternative is to call SteamAPI_RunCallbacks from the main thread only,
+        /// and call SteamAPI_ReleaseCurrentThreadMemory regularly on other threads.
+        /// </summary>
+        public static RunCallbacksFunc RunCallbacks { get; private set; }
+
+        /// <summary>
         /// Many Steam API functions allocate a small amount of thread-local memory for parameter storage.
         /// SteamAPI_ReleaseCurrentThreadMemory() will free API memory associated with the calling thread.
         /// This function is also called automatically by SteamAPI_RunCallbacks(), so a single-threaded
@@ -181,6 +191,7 @@ namespace Steamworks.Core
             Shutdown = LoadSteamworksFunction<ShutdownFunc>("SteamAPI_Shutdown");
 
             RestartAppIfNecessary = LoadSteamworksFunction<RestartAppIfNecessaryFunc>("SteamAPI_RestartAppIfNecessary");
+            RunCallbacks = LoadSteamworksFunction<RunCallbacksFunc>("SteamAPI_RunCallbacks");
             ReleaseCurrentThreadMemory = LoadSteamworksFunction<ReleaseCurrentThreadMemoryFunc>("SteamAPI_ReleaseCurrentThreadMemory");
 
             GetHSteamPipe = LoadSteamworksFunction<GetHSteamPipeFunc>("SteamAPI_GetHSteamPipe");

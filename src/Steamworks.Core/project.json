@@ -3,7 +3,7 @@
     "copyright": "Fox Council",
     "description": ".NET Core bindings to Valve's wonderful Steamworks API",
     "language": "en-US",
-    "version": "0.2.1-*",
+    "version": "0.2.2-*",
 
     "dependencies": {
         "NETStandard.Library": "1.6.0",

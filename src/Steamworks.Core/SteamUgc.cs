@@ -955,9 +955,11 @@ namespace Steamworks.Core
 
         public uint ConsumerAppID;
 
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 129)] public string Title; //char[129]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 129)]
+        public string Title; //char[129]
 
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8000)] public string Description; //char[8000]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8000)]
+        public string Description; //char[8000]
 
         public ulong SteamIDOwner;
 
@@ -969,25 +971,31 @@ namespace Steamworks.Core
 
         public ERemoteStoragePublishedFileVisibility Visibility;
 
-        [MarshalAs(UnmanagedType.I1)] public bool Banned;
+        [MarshalAs(UnmanagedType.I1)]
+        public bool Banned;
 
-        [MarshalAs(UnmanagedType.I1)] public bool AcceptedForUse;
+        [MarshalAs(UnmanagedType.I1)]
+        public bool AcceptedForUse;
 
-        [MarshalAs(UnmanagedType.I1)] public bool TagsTruncated;
+        [MarshalAs(UnmanagedType.I1)]
+        public bool TagsTruncated;
 
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1025)] public string Tags; //char[1025]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 1025)]
+        public string Tags; //char[1025]
 
         public ulong File;
 
         public ulong PreviewFile;
 
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)] public string FileName; //char[260]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
+        public string FileName; //char[260]
 
         public int FileSize;
 
         public int PreviewFileSize;
 
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)] public string URL; //char[256]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
+        public string URL; //char[256]
 
         public uint VotesUp;
 

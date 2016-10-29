@@ -1,64 +1,99 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
+﻿//   !!  // Steamworks.Core.Test - Program.cs
+// *.-". // Created: 2016-10-14 [9:29 PM]
+//  | |  // Copyright 2016 // MIT License // The Fox Council 
+// Modified by: Fox Diller on 2016-10-28 @ 11:09 PM
+
+#region Usings
+
+using System;
+using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
+
+#endregion
 
 namespace Steamworks.Core.Test
 {
     public class Program
     {
-        public static void Main(string[] args)
+        private static SteamworksSimulatorApp m_steamworksSimulatorApp;
+
+
+        public static void Main(string[] c_args)
         {
-            SteamApi.Init();
+            Console.OutputEncoding = Encoding.UTF8;
+            Console.Title = "Steamworks.Core Tester App";
 
-            Console.WriteLine(SteamApi.GetHSteamPipe());
-            Console.WriteLine(SteamApi.GetHSteamUser());
-            Console.WriteLine(SteamApi.Client.GetIpcCallCount());
-            Console.WriteLine(SteamApi.Friends.GetPersonaName());
+            m_steamworksSimulatorApp = new SteamworksSimulatorApp();
 
-            Console.WriteLine(SteamApi.Controller.Init());
-
-            var a_thing = SteamApi.Controller.GetActionSetHandle("InGameControls");
-
-            var a_fireHandle = SteamApi.Controller.GetDigitalActionHandle("fire");
-
-            SteamApi.Controller.ShowBindingPanel(SteamController.STEAM_CONTROLLER_HANDLE_ALL_CONTROLLERS);
-
-            var a_isRunning = true;
-
-            while (a_isRunning)
+            m_steamworksSimulatorApp.SceneGraph.ScreenBufferDirtyEvent += c_content =>
             {
-                SteamApi.Controller.ActivateActionSet(SteamController.STEAM_CONTROLLER_HANDLE_ALL_CONTROLLERS, a_thing);
+                var a_contentSplit = c_content.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
 
-                Console.Clear();
+                for (var a_index = 0; a_index < Console.WindowHeight - 1; a_index++)
+                {
+                    Console.CursorLeft = 0;
+                    Console.SetCursorPosition(0, a_index);
 
-                SteamApi.Controller.RunFrame();
+                    var a_emptyStringData = new string(' ', Console.WindowWidth);
 
-                var a_listOfControllerIds = new ulong[SteamController.STEAM_CONTROLLER_MAX_COUNT];
+                    if (a_contentSplit.Length > a_index)
+                    {
+                        a_emptyStringData = a_contentSplit[a_index].PadRight(Console.WindowWidth);
+                    }
 
-                var a_unmanagedHandle = GCHandle.Alloc(a_listOfControllerIds, GCHandleType.Pinned);
+                    Console.Write(a_emptyStringData);
+                }
+            };
 
-                var a_totalControllers = SteamApi.Controller.GetConnectedControllers(ref a_listOfControllerIds);
+            while (m_steamworksSimulatorApp != null)
+            {
+                m_steamworksSimulatorApp.OnTick(true);
 
-                a_unmanagedHandle.Free();
+                // Check if a key is being pressed, without blocking thread.
+                if (Console.KeyAvailable)
+                {
+                    // GetModule the key that was pressed, without printing it to console.
+                    var a_key = Console.ReadKey(true);
 
-                Console.WriteLine(a_totalControllers);
-                Console.WriteLine(string.Join(",", a_listOfControllerIds));
+                    // If enter is pressed, pass whatever we have to simulation.
+                    // ReSharper disable once SwitchStatementMissingSomeCases
+                    switch (a_key.Key)
+                    {
+                        case ConsoleKey.Enter:
+                        {
+                            m_steamworksSimulatorApp.InputManager.SendInputBufferAsCommand();
+                        }
+                            break;
 
-                Console.WriteLine();
+                        case ConsoleKey.Backspace:
+                        {
+                            m_steamworksSimulatorApp.InputManager.RemoveLastCharOfInputBuffer();
+                        }
+                            break;
 
-                var a_state = SteamApi.Controller.GetDigitalActionData(a_listOfControllerIds[0], a_fireHandle);
+                        default:
+                        {
+                            m_steamworksSimulatorApp.InputManager.AddCharToInputBuffer(a_key.KeyChar);
+                        }
+                            break;
+                    }
+                }
 
-                Console.WriteLine(a_state.State);
-                Console.WriteLine(a_state.Active);
-
-                Thread.Sleep(100);
-
-                // Console.ReadKey();
+                // Do not consume all of the CPU, allow other messages to occur.
+                Thread.Sleep(1);
             }
-            
+
+            // Make user press any key to close out the simulation completely, this way they know it closed without error.
+            Console.Clear();
+            Console.WriteLine("Goodbye!");
+            Console.WriteLine("Press ANY KEY to close this window...");
+            Console.ReadKey();
+        }
+
+        public static void Quit()
+        {
+            m_steamworksSimulatorApp.Destroy();
+            m_steamworksSimulatorApp = null;
         }
     }
 }
