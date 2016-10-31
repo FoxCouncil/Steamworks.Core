@@ -9,7 +9,7 @@ using WolfCurses.Utility;
 
 #endregion
 
-namespace Steamworks.Core.Test.Menus.MainMenu
+namespace Steamworks.Core.Test
 {
     /// <summary>Commands that will be loaded into the example window.</summary>
     public enum SteamworksCoreTesterWindowCommands
@@ -18,6 +18,6 @@ namespace Steamworks.Core.Test.Menus.MainMenu
         SteamFriends = 1,
 
         [Description("Quit the tester")]
-        Quit = 99
+        Quit = 9999
     }
 }

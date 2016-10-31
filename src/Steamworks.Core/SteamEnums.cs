@@ -403,29 +403,29 @@ namespace Steamworks.Core
         k_EFailurePipeFail = 1
     }
 
-    public enum EFriendRelationship
+    public enum FriendRelationship
     {
-        k_EFriendRelationshipNone = 0,
-        k_EFriendRelationshipBlocked = 1,
-        k_EFriendRelationshipRequestRecipient = 2,
-        k_EFriendRelationshipFriend = 3,
-        k_EFriendRelationshipRequestInitiator = 4,
-        k_EFriendRelationshipIgnored = 5,
-        k_EFriendRelationshipIgnoredFriend = 6,
-        k_EFriendRelationshipSuggested_DEPRECATED = 7,
-        k_EFriendRelationshipMax = 8
+        None = 0,
+        Blocked = 1,
+        RequestRecipient = 2,
+        Friend = 3,
+        RequestInitiator = 4,
+        Ignored = 5,
+        IgnoredFriend = 6,
+        Suggested_DEPRECATED = 7,
+        Max = 8
     }
 
-    public enum EPersonaState
+    public enum PersonaState
     {
-        k_EPersonaStateOffline = 0,
-        k_EPersonaStateOnline = 1,
-        k_EPersonaStateBusy = 2,
-        k_EPersonaStateAway = 3,
-        k_EPersonaStateSnooze = 4,
-        k_EPersonaStateLookingToTrade = 5,
-        k_EPersonaStateLookingToPlay = 6,
-        k_EPersonaStateMax = 7
+        Offline = 0,
+        Online = 1,
+        Busy = 2,
+        Away = 3,
+        Snooze = 4,
+        LookingToTrade = 5,
+        LookingToPlay = 6,
+        Max = 7
     }
 
     public enum EFriendFlags

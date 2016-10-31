@@ -20,6 +20,7 @@ namespace Steamworks.Core.Test
 
         public static void Main(string[] c_args)
         {
+            Console.CursorVisible = false;
             Console.OutputEncoding = Encoding.UTF8;
             Console.Title = "Steamworks.Core Tester App";
 
