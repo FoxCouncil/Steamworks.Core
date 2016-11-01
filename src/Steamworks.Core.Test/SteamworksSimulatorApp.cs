@@ -38,16 +38,12 @@ namespace Steamworks.Core.Test
             return string.Empty;
         }
 
-        #region Overrides of SimulationApp
-
         public override void OnTick(bool c_systemTick, bool c_skipTick = false)
         {
             base.OnTick(c_systemTick, c_skipTick);
 
             SteamApi.RunCallbacks();
         }
-
-        #endregion
 
         public override IEnumerable<Type> AllowedWindows
         {

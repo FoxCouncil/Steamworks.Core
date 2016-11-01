@@ -31,6 +31,7 @@ namespace Steamworks.Core.Test.Menus.MainMenu
             MenuHeader = $"-==[ Welcome, {SteamApi.Friends.GetPersonaName()} ]==-";
 
             AddCommand(SteamFriends, SteamworksCoreTesterWindowCommands.SteamFriends);
+            AddCommand(SteamController, SteamworksCoreTesterWindowCommands.SteamController);
 
             AddCommand(Quit, SteamworksCoreTesterWindowCommands.Quit);
         }
@@ -43,6 +44,11 @@ namespace Steamworks.Core.Test.Menus.MainMenu
         private void SteamFriends()
         {
             SetForm(typeof(SteamFriendsForm));
+        }
+
+        private void SteamController()
+        {
+            SetForm(typeof(SteamControllerForm));
         }
     }
 }
