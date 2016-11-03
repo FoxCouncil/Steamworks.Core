@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "Steamworks.Core.Test": {
-      "commandName": "Project",
-      "workingDirectory": "bin\\Debug\\netcoreapp1.0\\win10-x64"
-    }
-  }
-}
