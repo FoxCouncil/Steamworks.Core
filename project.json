@@ -3,18 +3,59 @@
     "copyright": "Fox Council",
     "description": ".NET Core bindings to Valve's wonderful Steamworks API",
     "language": "en-US",
-    "version": "0.4.1-*",
+    "version": "0.4.1.1",
 
     "dependencies": {
         "NETStandard.Library": "1.6.0",
         "System.Diagnostics.FileVersionInfo": "4.0.0"
     },
 
+	"packOptions": {
+		"summary": "Console control library for .Net Core.",
+		"tags": [
+		  "steam",
+		  "steamworks",
+		  "steamworks.net",
+		  "fox",
+		  "steamworksdotnet",
+		  "steamworks.core",
+		  "steam.core",
+		  "steam_api",
+		  "steamapi",
+		  "game_overlay",
+		  "overlay",
+		  "steam_overlay"
+		],
+		"owners": [
+		  "FoxCouncil"
+		],
+		"releaseNotes": "Latest nightly Jenkins build.",
+		"projectUrl": "https://github.com/FoxCouncil/Steamworks.Core",
+		"licenseUrl": "https://github.com/FoxCouncil/Steamworks.Core/blob/master/LICENSE",
+		"requireLicenseAcceptance": false,
+		"repository": {
+		  "type": "git",
+		  "url": "https://github.com/FoxCouncil/Steamworks.Core"
+		}
+	  },
+	
     "buildOptions": {
         "allowUnsafe": true,
         "optimize": true
     },
+	
+	"configurations": {
+    "Release": {},
+    "Debug": {},
+    "Jenkins": {}
+  },
 
+  "runtimes": {
+    "win7-x64": {},
+    "osx.10.10-x64": {},
+    "ubuntu.14.04-x64": {}
+  },
+  
     "frameworks": {
         "netstandard1.6": {
             "imports": "dnxcore50"
